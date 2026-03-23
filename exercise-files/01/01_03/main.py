@@ -68,7 +68,41 @@ if submit_button and uploaded_file is not None:
     with output_placeholder.container():
         st.divider()
         st.subheader("📝 Transcription")
-        st.text_area("Original Text", value=original_text, height=200)
+        st.text_area(
+            "Original Text",
+            value=original_text,
+            height=200,
+            key="transcription_preview",
+        )
 
     with st.spinner("Translating..."):
-        pass
+        translated_text = speech_to_translation(temp_file_path)
+
+    audio_output_path = "temporary_files/translated_audio.wav"
+    with st.spinner("Generating audio for translation..."):
+        text_to_speech(translated_text, output_path=audio_output_path)
+
+    with output_placeholder.container():
+        st.divider()
+        st.subheader("📝 Transcription")
+        st.text_area(
+            "Original Text", value=original_text, height=200, key="transcription_final"
+        )
+
+        st.divider()
+        st.subheader("🌐 Translation")
+        st.text_area(
+            "Translated Text",
+            value=translated_text,
+            height=200,
+            key="translation_final",
+        )
+
+        if os.path.exists(audio_output_path):
+            st.subheader("🔊 Listen to Translation")
+            with open(audio_output_path, "rb") as audio_file:
+                st.audio(audio_file.read(), format="audio/wav")
+
+        st.divider()
+        st.caption(f"📁 Temp input file: `{temp_file_path}`")
+        st.caption(f"📁 Audio output file: `{os.path.abspath(audio_output_path)}`")
