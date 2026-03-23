@@ -1,1 +1,6 @@
 requests>=2.28
+python-dotenv==1.1.0
+rich>=13.5.0
+colorama==0.4.6
+openai            # OpenAI API
+pandas
