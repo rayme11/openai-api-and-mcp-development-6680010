@@ -7,3 +7,10 @@ npm-debug.log
 .vscode
 __pycache__/
 *.pyc
+
+# Generated output files
+temporary_files/
+output/
+*.wav
+*.mp3
+exercise-files/01/01_03/temporary_files/translated_audio.wav
